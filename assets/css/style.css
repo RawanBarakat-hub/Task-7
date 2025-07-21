@@ -1,0 +1,94 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.white_spacing{
+    padding-left: 70px;
+    padding-right: 70px;
+}
+nav{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(5, 82, 5);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+nav a{
+    text-decoration: none;
+    color: rgb(5, 82, 5);
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-left: auto;
+    width: fit-content;
+    display: block;
+}
+.hero{
+    margin-top: 100px;
+    height: calc(100vh - 100px);
+}
+.hero .container{
+    display: flex;
+    justify-content: space-between;
+}
+.hero input[type="text"]{
+    width: 400px;
+    padding: 16px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.149);
+}
+.hero input:focus{
+    border-color: rgb(148, 227, 148);
+}
+.slider-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    width: 80%;
+    height: 60%;
+    overflow: hidden;
+    margin: 100px auto;
+    position: relative;
+}
+.slider-container .slide{
+    width: 33%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1s all;
+}
+.slider-container img{
+    width: 200px;
+    height: 200px;
+}
+.slider-container p:first-of-type{
+    font-size:24px;
+    margin: 10px 0 20px;
+}
+.slider-container p:last-of-type{
+    font-size: 20px;
+}
+.slider .dots{
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+.slider .dots span{
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+.active{
+    background-color: black;
+}
