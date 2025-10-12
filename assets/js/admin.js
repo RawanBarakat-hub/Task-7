@@ -1,10 +1,11 @@
-const container=document.querySelector(".slider-container")
-const dots=document.querySelector(".slider .dots")
-const form=document.querySelector("form")
-const firstSelect=document.querySelector("form .type_select")
-const secondSelect=document.querySelector("form .price_select")
-const searchInput=document.querySelector('form input[type="text"]')
-let products = JSON.parse(localStorage.getItem("products")); 
+const bodyTable=document.querySelector("table tbody")
+const formAdmin=document.querySelector("#admin")
+const productName=document.querySelector('#admin .name')
+const productCategory=document.querySelector('#admin select')
+const productPrice=document.querySelector('#admin .price')
+console.log(productPrice)
+const productImage=document.querySelector('#admin input[type="url"]')
+let products = JSON.parse(localStorage.getItem("products"))
 let lastId = parseInt(localStorage.getItem("lastId"))
 if (!products) {
     products=[
@@ -68,81 +69,59 @@ if (!products) {
             id:9,
             img:"https://images.unsplash.com/photo-1721563927724-74b1a0ddef33?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=700",
             title:"White fridge",
-            price:"250$",
+            price:"250",
             category:"Technical"
         }
     ]
     localStorage.setItem("products", JSON.stringify(products))
     localStorage.setItem("lastId", products[products.length - 1].id)
 }
-let activeDoteIndex=0
-const slider=(products)=>{
-    dots.innerHTML=""
-    for (let i = 0; i < products.length-2; i++) {
-        dots.innerHTML+=`<span class="dote ${(i==0)?"active":""}" id="dote${i}" onclick="sliderMovement(${i})"></span>`
-    }
-}
-const sliderMovement=(index=0)=>{
-        const activeDote=document.querySelector(`.slider #dote${index}`)
-        const dotes=document.querySelectorAll(".slider .dots .dote")
-        for (let i = 0; i < dotes.length; i++) {
-            dotes[i].classList.remove("active")
-        }
-        activeDote.classList.add("active")
-        const slides=document.querySelectorAll(".slider .slide")
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.transform=`translateX(calc(-${index*100}% - ${index*40}px))`
-        }
-        activeDoteIndex=index
-} 
-const slides=document.querySelectorAll(".slider .slide")
-const read=(products)=>{
-    container.innerHTML=""
+const readTable=()=>{
+    bodyTable.innerHTML=""
     products.forEach((product)=>{
-        container.innerHTML+=`
-            <div class="slide">
-                    <img src="${product.img}" alt="photo">
-                    <p class="technical">${product.title}</p>
-                    <p>${product.price}</p>
-            </div>
-        `    
+        bodyTable.innerHTML+=`
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.title}</td>
+                <td>${product.category}</td>
+                <td>${product.price}</td>
+                <td><img src=${product.img} alt="photo"/></td>
+                <td>
+                    <button onClick="goToEdit(${product.id})">Edit</button>
+                    <button onClick="deleteProduct(${product.id})">Delete</button>
+                </td>
+            </tr>
+        `
     })
-    slider(products)
-    sliderMovement()
 }
-read(products)
-const updateResults = () => {
-    let filteredProducts = [...products];
-    const searchValue = searchInput.value.toLowerCase().trim();
-    if (searchValue !== "") {
-        filteredProducts = filteredProducts.filter(product =>
-            product.title.toLowerCase().includes(searchValue)
-        );
-    }
-    const typeValue = firstSelect.value;
-    if (typeValue !== "All") {
-        filteredProducts = filteredProducts.filter(product =>
-            product.category === typeValue
-        );
-    }
-    const priceValue = secondSelect.value;
-    if (priceValue === "cheaper") {
-        filteredProducts = filteredProducts.sort((a, b) => {
-            const priceA = +a.price.replace("$", "");
-            const priceB = +b.price.replace("$", "");
-            return priceA - priceB;
-        });
-    } else if (priceValue === "highst") {
-        filteredProducts = filteredProducts.sort((a, b) => {
-            const priceA = +a.price.replace("$", "");
-            const priceB = +b.price.replace("$", "");
-            return priceB - priceA;
-        });
-    }
 
-    read(filteredProducts);
-};
-searchInput.addEventListener("input", updateResults);
-firstSelect.addEventListener("change", updateResults);
-secondSelect.addEventListener("change", updateResults);
-
+readTable()
+formAdmin.addEventListener("submit",(event)=>{
+    event.preventDefault()
+    let product={
+        id:lastId+1,
+        img:productImage.value,
+        title:productName.value,
+        price:productPrice.value,
+        category:productCategory.value
+    }
+    products.push(product)
+    lastId=product.id
+    productName.value=""
+    productPrice.value=""
+    productImage.value=""
+    localStorage.setItem("products",JSON.stringify(products))
+    localStorage.setItem("lastId",lastId)
+    readTable()
+})
+const goToEdit=(id)=>{
+    localStorage.setItem("editProductId", id)
+    window.location.href = "edit.html"
+}
+const deleteProduct=(id)=>{
+    products=products.filter((product)=>{
+        return product.id!=id
+    })
+    localStorage.setItem("products",JSON.stringify(products))
+    readTable()
+}

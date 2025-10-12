@@ -18,7 +18,7 @@ nav{
 }
 nav a{
     text-decoration: none;
-    color: rgb(5, 82, 5);
+    color: #055205;
     background-color: white;
     padding: 8px 16px;
     border-radius: 6px;
@@ -44,18 +44,23 @@ nav a{
 .hero input:focus{
     border-color: rgb(148, 227, 148);
 }
+.slider{
+    border: 1px solid  #01370140;
+    border-radius: 6px;
+    margin-top: 30px;
+}
 .slider-container{
     display: flex;
     justify-content: space-between;
     gap: 40px;
-    width: 80%;
+    width: 80%; 
     height: 60%;
     overflow: hidden;
     margin: 100px auto;
     position: relative;
 }
 .slider-container .slide{
-    width: 33%;
+    width: 30%;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -87,8 +92,35 @@ nav a{
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid #013701;
 }
 .active{
-    background-color: black;
+    background-color: #013701;
+}
+table th,td{
+    padding: 10px;
+    border: 1px solid #013701;
+}
+table td img{
+    width: 40px;
+    height: 40px;
+}
+#admin{
+    margin: 100px 0 50px;
+}
+#edit{
+    width: 400px;
+    margin: 50px auto;
+    input{
+        display: block;
+        padding: 20px 0;
+        margin: 20px 0;
+    }
+    input,select{
+        width: 300px;
+    }
+}
+#edit img{
+    width: 300px;
+    height: 300px;
 }
