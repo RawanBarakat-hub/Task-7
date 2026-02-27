@@ -93,7 +93,6 @@ nav a{
     height: 20px;
     border-radius: 50%;
     border: 1px solid #013701;
-    cursor: pointer;
 }
 .active{
     background-color: #013701;
